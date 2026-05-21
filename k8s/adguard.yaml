@@ -106,9 +106,10 @@ spec:
   template:
     metadata: { labels: { app: adguard } }
     spec:
-      # AdGuard Home is multi-arch (amd64+arm64); allow scheduling on any LAN node
+      # RWO Longhorn PVCs and a stable DNS VIP make this safer on the control node.
       nodeSelector:
         topology: lan
+        kubernetes.io/hostname: ubuntu
       initContainers:
         # Seed config only on first run (PVC empty) — never overwrites existing config
         - name: config-seed
