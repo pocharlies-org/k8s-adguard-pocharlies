@@ -1,0 +1,70 @@
+name: Update AdGuard Home version
+
+# Checks GitHub releases weekly; opens PR when a new version is out.
+# Current image: adguard/adguardhome:v<semver>
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve latest AdGuard Home release
+        id: ver
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'PYEOF'
+          import urllib.request, json, re, os
+
+          req = urllib.request.Request(
+              "https://api.github.com/repos/AdguardTeam/AdGuardHome/releases/latest",
+              headers={"Authorization": f"Bearer {os.environ['GH_TOKEN']}", "Accept": "application/vnd.github+json"}
+          )
+          with urllib.request.urlopen(req) as r:
+              data = json.loads(r.read())
+
+          latest = data["tag_name"]   # e.g. "v0.107.69"
+
+          with open("k8s/adguard.yaml") as f:
+              content = f.read()
+          m = re.search(r'image: adguard/adguardhome:(.+)', content)
+          current = m.group(1) if m else "unknown"
+
+          print(f"Current: {current}  Latest: {latest}")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              out.write(f"latest={latest}\n")
+              out.write(f"current={current}\n")
+              out.write(f"changed={'true' if latest and latest != current else 'false'}\n")
+          PYEOF
+
+      - name: Update manifest
+        if: steps.ver.outputs.changed == 'true'
+        run: |
+          sed -i "s|image: adguard/adguardhome:.*|image: adguard/adguardhome:${{ steps.ver.outputs.latest }}|g" k8s/adguard.yaml
+
+      - name: Open PR
+        if: steps.ver.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: update/adguard-${{ steps.ver.outputs.latest }}
+          commit-message: "chore: update AdGuard Home ${{ steps.ver.outputs.current }} → ${{ steps.ver.outputs.latest }}"
+          title: "chore: update AdGuard Home ${{ steps.ver.outputs.current }} → ${{ steps.ver.outputs.latest }}"
+          body: |
+            Automated update of AdGuard Home image tag.
+
+            - **From:** `${{ steps.ver.outputs.current }}`
+            - **To:** `${{ steps.ver.outputs.latest }}`
+
+            [AdGuard Home releases](https://github.com/AdguardTeam/AdGuardHome/releases/tag/${{ steps.ver.outputs.latest }})
+          labels: dependencies
+          delete-branch: true
