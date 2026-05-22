@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: arc-adguard
     steps:
       - uses: actions/checkout@v4
 
