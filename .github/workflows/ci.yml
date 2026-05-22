@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   standard:
-    uses: pocharlies/k8s-gitops-pocharlies/.github/workflows/reusable-ci.yml@main
+    uses: pocharlies-org/k8s-gitops-pocharlies/.github/workflows/reusable-ci.yml@main
     with:
       runner: arc-k8s
       run_node: false
