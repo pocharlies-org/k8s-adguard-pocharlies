@@ -66,6 +66,19 @@ data:
         - domain: "*.k8s.lan"
           answer: "192.168.50.240"
           enabled: true
+        # Split-horizon: hosts públicos servidos por el nginx api-gateway (x86 LAN
+        # 192.168.50.142). En LAN/Tailscale resuelven al nginx interno, que bypassa
+        # el SSO por IP de origen (ver allow LAN/TS en nginx). Desde internet, el DNS
+        # público sigue dando la WAN → auth Keycloak obligatorio.
+        - domain: "dgx.e-dani.com"
+          answer: "192.168.50.142"
+          enabled: true
+        - domain: "teslamate.e-dani.com"
+          answer: "192.168.50.142"
+          enabled: true
+        - domain: "bambulab.e-dani.com"
+          answer: "192.168.50.142"
+          enabled: true
       rewrites_enabled: true
       filtering_enabled: true
       protection_enabled: true
