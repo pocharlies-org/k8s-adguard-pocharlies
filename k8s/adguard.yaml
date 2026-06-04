@@ -119,10 +119,15 @@ spec:
   template:
     metadata: { labels: { app: adguard } }
     spec:
-      # RWO Longhorn PVCs and a stable DNS VIP make this safer on the control node.
+      # 2026-06-05: moved off the x86 home node to the arm64 LAN GPU node nvidia-dgx
+      # (still on the home LAN — MetalLB announces the DNS VIP 192.168.50.241 from its
+      # enP7s7 NIC). House-DNS state is a node-local hostPath here (NOT Longhorn) so the
+      # DNS stays fully independent of the OVH cluster / WAN; config is tiny (~5MB) and
+      # backed up via Velero. Image is multi-arch (arm64).
       nodeSelector:
-        topology: lan
-        kubernetes.io/hostname: ubuntu
+        kubernetes.io/hostname: nvidia-dgx
+      tolerations:
+        - { key: dedicated, operator: Equal, value: llm, effect: NoSchedule }
       initContainers:
         # Seed config only on first run (PVC empty) — never overwrites existing config
         - name: config-seed
@@ -156,8 +161,11 @@ spec:
             requests: { cpu: 50m, memory: 128Mi }
             limits:   { memory: 512Mi }
       volumes:
-        - { name: config, persistentVolumeClaim: { claimName: adguard-config } }
-        - { name: data,   persistentVolumeClaim: { claimName: adguard-data } }
+        # node-local hostPath on nvidia-dgx (/var/lib/adguard), migrated 1:1 from the old
+        # Longhorn PVCs adguard-config/adguard-data (kept defined above as rollback). The
+        # config-seed initContainer is seed-if-empty, so the migrated config is preserved.
+        - { name: config, hostPath: { path: /var/lib/adguard/conf, type: Directory } }
+        - { name: data,   hostPath: { path: /var/lib/adguard/work, type: Directory } }
         - { name: seed,   configMap: { name: adguard-seed-config } }
 ---
 # DNS service — LoadBalancer with dedicated VIP .241
