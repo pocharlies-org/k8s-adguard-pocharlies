@@ -143,7 +143,7 @@ spec:
             - { name: seed,   mountPath: /seed, readOnly: true }
       containers:
         - name: adguard
-          image: adguard/adguardhome:v0.107.76
+          image: adguard/adguardhome:v0.107.77
           ports:
             - { name: dns-udp, containerPort: 53, protocol: UDP }
             - { name: dns-tcp, containerPort: 53, protocol: TCP }
