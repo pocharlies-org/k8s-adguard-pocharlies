@@ -73,6 +73,9 @@ data:
         - domain: "dgx.e-dani.com"
           answer: "192.168.50.142"
           enabled: true
+        - domain: "s3.e-dani.com"
+          answer: "192.168.50.142"
+          enabled: true
         - domain: "teslamate.e-dani.com"
           answer: "192.168.50.142"
           enabled: true
