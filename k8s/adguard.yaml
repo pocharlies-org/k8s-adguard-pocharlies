@@ -66,15 +66,14 @@ data:
         - domain: "*.k8s.lan"
           answer: "192.168.50.240"
           enabled: true
-        # Split-horizon: hosts públicos servidos por el nginx api-gateway (x86 LAN
-        # 192.168.50.142). En LAN/Tailscale resuelven al nginx interno, que bypassa
-        # el SSO por IP de origen (ver allow LAN/TS en nginx). Desde internet, el DNS
-        # público sigue dando la WAN → auth Keycloak obligatorio.
+        # Split-horizon: public DGX hosts served by Traefik LAN (192.168.50.240).
+        # LAN/Tailscale clients use the same public URLs without Cloudflare/Keycloak;
+        # internet clients keep resolving the Cloudflare-proxied public records.
         - domain: "dgx.e-dani.com"
-          answer: "192.168.50.142"
+          answer: "192.168.50.240"
           enabled: true
         - domain: "s3.e-dani.com"
-          answer: "192.168.50.142"
+          answer: "192.168.50.240"
           enabled: true
         - domain: "teslamate.e-dani.com"
           answer: "192.168.50.142"
