@@ -177,7 +177,7 @@ metadata:
   name: adguard-dns
   namespace: adguard
   annotations:
-    metallb.universe.tf/loadBalancerIPs: 192.168.50.241
+    metallb.io/loadBalancerIPs: 192.168.50.241
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
