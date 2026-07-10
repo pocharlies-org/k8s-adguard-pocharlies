@@ -25,8 +25,10 @@ spec:
   storageClassName: longhorn
 ---
 # Seed config — copied to PVC by init container only if AdGuardHome.yaml absent.
-# Users section: admin / Homelab2024! (bcrypt) — change via UI after first run.
-# Rewrites: *.lan.e-dani.com + *.k8s.lan → 192.168.50.240 (Traefik LAN VIP)
+# Users section stores only the bcrypt verifier; the credential itself belongs
+# in the approved secret manager.
+# Rewrites: the K3s API uses its stable Tailscale Service VIP, while other
+# *.lan.e-dani.com and *.k8s.lan names use the Traefik LAN VIP.
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -60,6 +62,9 @@ data:
       filters_update_interval: 24
     filtering:
       rewrites:
+        - domain: "k8s.lan.e-dani.com"
+          answer: "100.105.20.73"
+          enabled: true
         - domain: "*.lan.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -131,7 +136,9 @@ spec:
       tolerations:
         - { key: dedicated, operator: Equal, value: llm, effect: NoSchedule }
       initContainers:
-        # Seed config only on first run (PVC empty) — never overwrites existing config
+        # Seed config on first run and apply the idempotent K3s API DNS migration
+        # to existing state. All other operator-managed AdGuard settings remain
+        # untouched.
         - name: config-seed
           image: busybox
           command:
@@ -145,6 +152,23 @@ spec:
               else
                 echo "Config already exists, skipping seed."
               fi
+
+              if ! grep -Eq "domain: ['\"]?k8s\.lan\.e-dani\.com['\"]?$" /conf/AdGuardHome.yaml; then
+                echo "Adding the stable K3s API TailVIP rewrite..."
+                tmp="/conf/AdGuardHome.yaml.k3s-api.$$"
+                awk '
+                  { print }
+                  /^  rewrites:$/ {
+                    print "    - domain: k8s.lan.e-dani.com"
+                    print "      answer: 100.105.20.73"
+                    print "      enabled: true"
+                  }
+                ' /conf/AdGuardHome.yaml >"$tmp"
+                chmod 0600 "$tmp"
+                mv "$tmp" /conf/AdGuardHome.yaml
+              fi
+
+              test "$(grep -Ec "domain: ['\"]?k8s\.lan\.e-dani\.com['\"]?$" /conf/AdGuardHome.yaml)" = 1
           volumeMounts:
             - { name: config, mountPath: /conf }
             - { name: seed,   mountPath: /seed, readOnly: true }
