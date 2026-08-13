@@ -77,6 +77,9 @@ data:
         - domain: "dgx.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
+        - domain: "code.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
         - domain: "s3.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -136,9 +139,8 @@ spec:
       tolerations:
         - { key: dedicated, operator: Equal, value: llm, effect: NoSchedule }
       initContainers:
-        # Seed config on first run and apply the idempotent K3s API DNS migration
-        # to existing state. All other operator-managed AdGuard settings remain
-        # untouched.
+        # Seed config on first run and apply idempotent split-DNS migrations to
+        # existing state. All other operator-managed AdGuard settings remain untouched.
         - name: config-seed
           image: busybox
           command:
@@ -169,6 +171,23 @@ spec:
               fi
 
               test "$(grep -Ec "domain: ['\"]?k8s\.lan\.e-dani\.com['\"]?$" /conf/AdGuardHome.yaml)" = 1
+
+              if ! grep -Eq "domain: ['\"]?code\.e-dani\.com['\"]?$" /conf/AdGuardHome.yaml; then
+                echo "Adding the OpenCode LAN rewrite..."
+                tmp="/conf/AdGuardHome.yaml.opencode.$$"
+                awk '
+                  { print }
+                  /^  rewrites:$/ {
+                    print "    - domain: code.e-dani.com"
+                    print "      answer: 192.168.50.240"
+                    print "      enabled: true"
+                  }
+                ' /conf/AdGuardHome.yaml >"$tmp"
+                chmod 0600 "$tmp"
+                mv "$tmp" /conf/AdGuardHome.yaml
+              fi
+
+              test "$(grep -Ec "domain: ['\"]?code\.e-dani\.com['\"]?$" /conf/AdGuardHome.yaml)" = 1
           volumeMounts:
             - { name: config, mountPath: /conf }
             - { name: seed,   mountPath: /seed, readOnly: true }
