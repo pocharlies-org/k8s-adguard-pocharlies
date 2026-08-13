@@ -71,13 +71,22 @@ data:
         - domain: "*.k8s.lan"
           answer: "192.168.50.240"
           enabled: true
-        # Split-horizon: public DGX hosts served by Traefik LAN (192.168.50.240).
+        # Split-horizon: selected human panels served by Traefik LAN (192.168.50.240).
         # LAN/Tailscale clients use the same public URLs without Cloudflare/Keycloak;
         # internet clients keep resolving the Cloudflare-proxied public records.
         - domain: "dgx.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
         - domain: "code.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "chamber.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "jarvis.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "skirmbooks.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
         - domain: "s3.e-dani.com"
@@ -87,7 +96,7 @@ data:
           answer: "192.168.50.142"
           enabled: true
         - domain: "bambulab.e-dani.com"
-          answer: "192.168.50.142"
+          answer: "192.168.50.240"
           enabled: true
       rewrites_enabled: true
       filtering_enabled: true
@@ -169,22 +178,50 @@ spec:
 
               test "$(grep -Ec "domain: ['\"]?k8s\.lan\.e-dani\.com['\"]?$" /conf/AdGuardHome.yaml)" = 1
 
-              if ! grep -Eq "domain: ['\"]?code\.e-dani\.com['\"]?$" /conf/AdGuardHome.yaml; then
-                echo "Adding the OpenCode LAN rewrite..."
-                tmp="/conf/AdGuardHome.yaml.opencode.$$"
-                awk '
-                  { print }
-                  /^  rewrites:$/ {
-                    print "    - domain: code.e-dani.com"
-                    print "      answer: 192.168.50.240"
-                    print "      enabled: true"
-                  }
-                ' /conf/AdGuardHome.yaml >"$tmp"
-                chmod 0600 "$tmp"
-                mv "$tmp" /conf/AdGuardHome.yaml
-              fi
+              ensure_panel_rewrite() {
+                domain="$1"
+                count="$(grep -Ec "domain: ['\"]?${domain//./\\.}['\"]?$" /conf/AdGuardHome.yaml)"
+                if [ "$count" -gt 1 ]; then
+                  echo "Duplicate split-DNS rewrite for $domain" >&2
+                  exit 1
+                fi
+                if [ "$count" -eq 0 ]; then
+                  echo "Adding LAN panel rewrite for $domain..."
+                  tmp="/conf/AdGuardHome.yaml.split.$$"
+                  awk -v d="$domain" '
+                    { print }
+                    /^  rewrites:$/ {
+                      print "    - domain: " d
+                      print "      answer: 192.168.50.240"
+                      print "      enabled: true"
+                    }
+                  ' /conf/AdGuardHome.yaml >"$tmp"
+                  chmod 0600 "$tmp"
+                  mv "$tmp" /conf/AdGuardHome.yaml
+                else
+                  tmp="/conf/AdGuardHome.yaml.split.$$"
+                  awk -v d="$domain" '
+                    BEGIN { in_target = 0 }
+                    /^    - domain:/ {
+                      line = $0
+                      gsub(/["'\'' ]/, "", line)
+                      in_target = (line == "-domain:" d)
+                    }
+                    in_target && /^      answer:/ { print "      answer: 192.168.50.240"; next }
+                    in_target && /^      enabled:/ { print "      enabled: true"; next }
+                    { print }
+                  ' /conf/AdGuardHome.yaml >"$tmp"
+                  chmod 0600 "$tmp"
+                  mv "$tmp" /conf/AdGuardHome.yaml
+                fi
+                test "$(grep -Ec "domain: ['\"]?${domain//./\\.}['\"]?$" /conf/AdGuardHome.yaml)" = 1
+              }
 
-              test "$(grep -Ec "domain: ['\"]?code\.e-dani\.com['\"]?$" /conf/AdGuardHome.yaml)" = 1
+              for domain in \
+                code.e-dani.com dgx.e-dani.com chamber.e-dani.com \
+                jarvis.e-dani.com bambulab.e-dani.com skirmbooks.e-dani.com; do
+                ensure_panel_rewrite "$domain"
+              done
           volumeMounts:
             - { name: config, mountPath: /conf }
             - { name: seed,   mountPath: /seed, readOnly: true }
