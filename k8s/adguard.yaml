@@ -80,6 +80,9 @@ data:
         - domain: "code.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
+        - domain: "claude.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
         - domain: "chamber.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -218,7 +221,7 @@ spec:
               }
 
               for domain in \
-                code.e-dani.com dgx.e-dani.com chamber.e-dani.com \
+                code.e-dani.com claude.e-dani.com dgx.e-dani.com chamber.e-dani.com \
                 jarvis.e-dani.com bambulab.e-dani.com skirmbooks.e-dani.com; do
                 ensure_panel_rewrite "$domain"
               done
