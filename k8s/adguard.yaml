@@ -95,6 +95,14 @@ data:
         - domain: "s3.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
+        # litellm.e-dani.com is an API, not a panel: opencode/Codex call it from
+        # LAN and Tailscale. Through Cloudflare the ~100s origin cap cuts
+        # large-context requests mid-stream (measured 70s..>120s TTFB) while
+        # LiteLLM is still waiting on its own 600s timeout. Via traefik-lan
+        # there is no cap.
+        - domain: "litellm.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
         - domain: "teslamate.e-dani.com"
           answer: "192.168.50.142"
           enabled: true
@@ -222,7 +230,8 @@ spec:
 
               for domain in \
                 code.e-dani.com claude.e-dani.com dgx.e-dani.com chamber.e-dani.com \
-                jarvis.e-dani.com bambulab.e-dani.com skirmbooks.e-dani.com; do
+                jarvis.e-dani.com bambulab.e-dani.com skirmbooks.e-dani.com \
+                litellm.e-dani.com; do
                 ensure_panel_rewrite "$domain"
               done
           volumeMounts:
