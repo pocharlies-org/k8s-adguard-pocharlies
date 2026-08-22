@@ -475,6 +475,6 @@ spec:
       kind: Rule
       services:
         - name: adguard-web
-          port: 3000
+          port: 80
   tls:
     secretName: wildcard-lan-tls
