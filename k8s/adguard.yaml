@@ -193,9 +193,6 @@ data:
         - domain: "minio.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
-        - domain: "multichamber.e-dani.com"
-          answer: "192.168.50.240"
-          enabled: true
         - domain: "openclaw-k8s-readonly.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -386,9 +383,10 @@ spec:
                 test "$(grep -Ec "domain: ['\"]?${domain//./\\.}['\"]?$" /conf/AdGuardHome.yaml)" = 0
               }
 
-              # Sauvage OpenClaw was retired. The config PVC persists across
-              # rollouts, so removing it from the seed/list is insufficient.
+              # Retired hosts must also be removed from the persisted runtime
+              # config: removing them from the seed/list alone is insufficient.
               remove_panel_rewrite "openclaw-sauvage.e-dani.com"
+              remove_panel_rewrite "multichamber.e-dani.com"
 
               for domain in \
                 adguard-setup.e-dani.com adguard.e-dani.com admin.skirmshop.es \
@@ -402,7 +400,7 @@ spec:
                 keep-api.e-dani.com keep.e-dani.com langfuse.e-dani.com \
                 libreplay.e-dani.com litellm.e-dani.com longhorn.e-dani.com \
                 mcp-socialmedia.e-dani.com minio-s3.e-dani.com minio.e-dani.com \
-                multichamber.e-dani.com openclaw-k8s-readonly.e-dani.com \
+                openclaw-k8s-readonly.e-dani.com \
                 openclaw-k8s-webhooks.e-dani.com openclaw-k8s.e-dani.com \
                 openclaw-synapse.e-dani.com \
                 openclaw-webhooks.e-dani.com openclaw.e-dani.com \
