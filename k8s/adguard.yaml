@@ -111,9 +111,143 @@ data:
           answer: "192.168.50.240"
           enabled: true
         - domain: "teslamate.e-dani.com"
-          answer: "192.168.50.142"
+          answer: "192.168.50.240"
           enabled: true
         - domain: "bambulab.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        # Canonical-host migration: every Traefik LAN hostname also has a
+        # non-.lan canonical name. Public DNS points the same names at edge.
+        - domain: "adguard-setup.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "adguard.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "admin.skirmshop.es"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "agentgateway-mcp-stg.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "agentgateway-mcp.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "alertmanager.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "argocd.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "aurora-api.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "aurora.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "brain-ingest-k8s.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "brain-k8s.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "dgx-synapse-mcp.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "firecrawl.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "grafana.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "ha-dashboard.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "harbor.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "home-assistant.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "keep-api.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "keep.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "langfuse.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "libreplay.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "longhorn.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "mcp-socialmedia.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "minio-s3.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "minio.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "multichamber.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "openclaw-k8s-readonly.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "openclaw-k8s-webhooks.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "openclaw-k8s.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "openclaw-sauvage.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "openclaw-synapse.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "openclaw-webhooks.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "openclaw.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "picqer-mcp.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "sauvage-bot.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "skirmshop-s3-console.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "skirmshop-s3.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "stt-mcp.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "synapse.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "uriel.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "vault.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "vm.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "whatsapp-pro.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
+        - domain: "whatsapp.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
       rewrites_enabled: true
@@ -236,9 +370,27 @@ spec:
               }
 
               for domain in \
-                code.e-dani.com claude.e-dani.com dgx.e-dani.com chamber.e-dani.com \
-                jarvis.e-dani.com bambulab.e-dani.com skirmbooks.e-dani.com \
-                litellm.e-dani.com; do
+                adguard-setup.e-dani.com adguard.e-dani.com admin.skirmshop.es \
+                agentgateway-mcp-stg.e-dani.com agentgateway-mcp.e-dani.com \
+                alertmanager.e-dani.com argocd.e-dani.com aurora-api.e-dani.com \
+                aurora.e-dani.com bambulab.e-dani.com brain-ingest-k8s.e-dani.com \
+                brain-k8s.e-dani.com chamber.e-dani.com claude.e-dani.com \
+                code.e-dani.com dgx-synapse-mcp.e-dani.com dgx.e-dani.com \
+                firecrawl.e-dani.com grafana.e-dani.com ha-dashboard.e-dani.com \
+                harbor.e-dani.com home-assistant.e-dani.com jarvis.e-dani.com \
+                keep-api.e-dani.com keep.e-dani.com langfuse.e-dani.com \
+                libreplay.e-dani.com litellm.e-dani.com longhorn.e-dani.com \
+                mcp-socialmedia.e-dani.com minio-s3.e-dani.com minio.e-dani.com \
+                multichamber.e-dani.com openclaw-k8s-readonly.e-dani.com \
+                openclaw-k8s-webhooks.e-dani.com openclaw-k8s.e-dani.com \
+                openclaw-sauvage.e-dani.com openclaw-synapse.e-dani.com \
+                openclaw-webhooks.e-dani.com openclaw.e-dani.com \
+                paperclip.e-dani.com picqer-mcp.e-dani.com s3.e-dani.com \
+                sauvage-bot.e-dani.com skirmbooks.e-dani.com \
+                skirmshop-s3-console.e-dani.com skirmshop-s3.e-dani.com \
+                stt-mcp.e-dani.com synapse.e-dani.com teslamate.e-dani.com \
+                uriel.e-dani.com vault.e-dani.com vm.e-dani.com \
+                whatsapp-pro.e-dani.com whatsapp.e-dani.com; do
                 ensure_panel_rewrite "$domain"
               done
           volumeMounts:
