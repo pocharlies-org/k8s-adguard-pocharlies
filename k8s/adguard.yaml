@@ -366,6 +366,30 @@ spec:
                 test "$(grep -Ec "domain: ['\"]?${domain//./\\.}['\"]?$" /conf/AdGuardHome.yaml)" = 1
               }
 
+              remove_panel_rewrite() {
+                domain="$1"
+                tmp="/conf/AdGuardHome.yaml.remove.$$"
+                awk -v d="$domain" '
+                  BEGIN { in_target = 0 }
+                  /^    - domain:/ {
+                    line = $0
+                    gsub(/["'\'' ]/, "", line)
+                    in_target = (line == "-domain:" d)
+                    if (in_target) next
+                  }
+                  in_target && /^      (answer|enabled):/ { next }
+                  in_target { in_target = 0 }
+                  { print }
+                ' /conf/AdGuardHome.yaml >"$tmp"
+                chmod 0600 "$tmp"
+                mv "$tmp" /conf/AdGuardHome.yaml
+                test "$(grep -Ec "domain: ['\"]?${domain//./\\.}['\"]?$" /conf/AdGuardHome.yaml)" = 0
+              }
+
+              # Sauvage OpenClaw was retired. The config PVC persists across
+              # rollouts, so removing it from the seed/list is insufficient.
+              remove_panel_rewrite "openclaw-sauvage.e-dani.com"
+
               for domain in \
                 adguard-setup.e-dani.com adguard.e-dani.com admin.skirmshop.es \
                 agentgateway-mcp-stg.e-dani.com agentgateway-mcp.e-dani.com \
