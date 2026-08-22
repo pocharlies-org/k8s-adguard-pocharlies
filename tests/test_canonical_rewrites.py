@@ -45,7 +45,6 @@ CANONICAL_HOSTS = {
     "openclaw-k8s-readonly.e-dani.com",
     "openclaw-k8s-webhooks.e-dani.com",
     "openclaw-k8s.e-dani.com",
-    "openclaw-sauvage.e-dani.com",
     "openclaw-synapse.e-dani.com",
     "openclaw-webhooks.e-dani.com",
     "openclaw.e-dani.com",

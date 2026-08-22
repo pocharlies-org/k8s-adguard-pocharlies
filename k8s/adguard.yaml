@@ -205,9 +205,6 @@ data:
         - domain: "openclaw-k8s.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
-        - domain: "openclaw-sauvage.e-dani.com"
-          answer: "192.168.50.240"
-          enabled: true
         - domain: "openclaw-synapse.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -383,7 +380,7 @@ spec:
                 mcp-socialmedia.e-dani.com minio-s3.e-dani.com minio.e-dani.com \
                 multichamber.e-dani.com openclaw-k8s-readonly.e-dani.com \
                 openclaw-k8s-webhooks.e-dani.com openclaw-k8s.e-dani.com \
-                openclaw-sauvage.e-dani.com openclaw-synapse.e-dani.com \
+                openclaw-synapse.e-dani.com \
                 openclaw-webhooks.e-dani.com openclaw.e-dani.com \
                 paperclip.e-dani.com picqer-mcp.e-dani.com s3.e-dani.com \
                 sauvage-bot.e-dani.com skirmbooks.e-dani.com \
