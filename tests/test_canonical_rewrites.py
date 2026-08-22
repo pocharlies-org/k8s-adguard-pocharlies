@@ -41,7 +41,6 @@ CANONICAL_HOSTS = {
     "mcp-socialmedia.e-dani.com",
     "minio-s3.e-dani.com",
     "minio.e-dani.com",
-    "multichamber.e-dani.com",
     "openclaw-k8s-readonly.e-dani.com",
     "openclaw-k8s-webhooks.e-dani.com",
     "openclaw-k8s.e-dani.com",
@@ -105,7 +104,11 @@ def test_init_container_reconciles_the_same_canonical_host_set():
     assert tokens == CANONICAL_HOSTS
 
 
-def test_init_container_removes_retired_sauvage_rewrite_from_persistent_config():
+def test_init_container_removes_retired_rewrites_from_persistent_config():
     text = MANIFEST.read_text()
-    assert 'remove_panel_rewrite "openclaw-sauvage.e-dani.com"' in text
+    for domain in {
+        "multichamber.e-dani.com",
+        "openclaw-sauvage.e-dani.com",
+    }:
+        assert f'remove_panel_rewrite "{domain}"' in text
     assert "test \"$(grep -Ec" in text
