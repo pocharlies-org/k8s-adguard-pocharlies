@@ -89,6 +89,13 @@ data:
         - domain: "jarvis.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
+
+        # Paperclip (orquestador de agentes, ns paperclip). Sin registro
+        # publico a proposito: su execution target abre shell como `dibanez`
+        # en el x86, asi que solo se resuelve desde dentro.
+        - domain: "paperclip.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
         - domain: "skirmbooks.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
