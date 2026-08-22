@@ -103,3 +103,9 @@ def test_init_container_reconciles_the_same_canonical_host_set():
         if token != ";" and token != "do"
     }
     assert tokens == CANONICAL_HOSTS
+
+
+def test_init_container_removes_retired_sauvage_rewrite_from_persistent_config():
+    text = MANIFEST.read_text()
+    assert 'remove_panel_rewrite "openclaw-sauvage.e-dani.com"' in text
+    assert "test \"$(grep -Ec" in text
