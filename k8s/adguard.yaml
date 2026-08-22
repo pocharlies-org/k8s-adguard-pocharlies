@@ -205,9 +205,6 @@ data:
         - domain: "openclaw-synapse.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
-        - domain: "openclaw-webhooks.e-dani.com"
-          answer: "192.168.50.240"
-          enabled: true
         - domain: "openclaw.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -387,6 +384,7 @@ spec:
               # config: removing them from the seed/list alone is insufficient.
               remove_panel_rewrite "openclaw-sauvage.e-dani.com"
               remove_panel_rewrite "multichamber.e-dani.com"
+              remove_panel_rewrite "openclaw-webhooks.e-dani.com"
 
               for domain in \
                 adguard-setup.e-dani.com adguard.e-dani.com admin.skirmshop.es \
@@ -402,8 +400,7 @@ spec:
                 mcp-socialmedia.e-dani.com minio-s3.e-dani.com minio.e-dani.com \
                 openclaw-k8s-readonly.e-dani.com \
                 openclaw-k8s-webhooks.e-dani.com openclaw-k8s.e-dani.com \
-                openclaw-synapse.e-dani.com \
-                openclaw-webhooks.e-dani.com openclaw.e-dani.com \
+                openclaw-synapse.e-dani.com openclaw.e-dani.com \
                 paperclip.e-dani.com picqer-mcp.e-dani.com s3.e-dani.com \
                 sauvage-bot.e-dani.com skirmbooks.e-dani.com \
                 skirmshop-s3-console.e-dani.com skirmshop-s3.e-dani.com \

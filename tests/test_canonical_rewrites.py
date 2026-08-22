@@ -45,7 +45,6 @@ CANONICAL_HOSTS = {
     "openclaw-k8s-webhooks.e-dani.com",
     "openclaw-k8s.e-dani.com",
     "openclaw-synapse.e-dani.com",
-    "openclaw-webhooks.e-dani.com",
     "openclaw.e-dani.com",
     "paperclip.e-dani.com",
     "picqer-mcp.e-dani.com",
@@ -109,6 +108,7 @@ def test_init_container_removes_retired_rewrites_from_persistent_config():
     for domain in {
         "multichamber.e-dani.com",
         "openclaw-sauvage.e-dani.com",
+        "openclaw-webhooks.e-dani.com",
     }:
         assert f'remove_panel_rewrite "{domain}"' in text
     assert "test \"$(grep -Ec" in text
