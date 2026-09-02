@@ -46,7 +46,6 @@ CANONICAL_HOSTS = {
     "openclaw-k8s.e-dani.com",
     "openclaw-synapse.e-dani.com",
     "openclaw.e-dani.com",
-    "paperclip.e-dani.com",
     "picqer-mcp.e-dani.com",
     "s3.e-dani.com",
     "sauvage-bot.e-dani.com",
