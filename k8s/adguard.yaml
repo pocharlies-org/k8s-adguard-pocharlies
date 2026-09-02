@@ -379,6 +379,7 @@ spec:
               remove_panel_rewrite "openclaw-sauvage.e-dani.com"
               remove_panel_rewrite "multichamber.e-dani.com"
               remove_panel_rewrite "openclaw-webhooks.e-dani.com"
+              remove_panel_rewrite "paperclip.e-dani.com"
 
               for domain in \
                 adguard-setup.e-dani.com adguard.e-dani.com admin.skirmshop.es \
