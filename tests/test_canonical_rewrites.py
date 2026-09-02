@@ -108,6 +108,7 @@ def test_init_container_removes_retired_rewrites_from_persistent_config():
         "multichamber.e-dani.com",
         "openclaw-sauvage.e-dani.com",
         "openclaw-webhooks.e-dani.com",
+        "paperclip.e-dani.com",
     }:
         assert f'remove_panel_rewrite "{domain}"' in text
     assert "test \"$(grep -Ec" in text
