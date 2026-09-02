@@ -90,12 +90,6 @@ data:
           answer: "192.168.50.240"
           enabled: true
 
-        # Paperclip (orquestador de agentes, ns paperclip). Sin registro
-        # publico a proposito: su execution target abre shell como `dibanez`
-        # en el x86, asi que solo se resuelve desde dentro.
-        - domain: "paperclip.e-dani.com"
-          answer: "192.168.50.240"
-          enabled: true
         - domain: "skirmbooks.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -401,7 +395,7 @@ spec:
                 openclaw-k8s-readonly.e-dani.com \
                 openclaw-k8s-webhooks.e-dani.com openclaw-k8s.e-dani.com \
                 openclaw-synapse.e-dani.com openclaw.e-dani.com \
-                paperclip.e-dani.com picqer-mcp.e-dani.com s3.e-dani.com \
+                picqer-mcp.e-dani.com s3.e-dani.com \
                 sauvage-bot.e-dani.com skirmbooks.e-dani.com \
                 skirmshop-s3-console.e-dani.com skirmshop-s3.e-dani.com \
                 stt-mcp.e-dani.com synapse.e-dani.com teslamate.e-dani.com \
