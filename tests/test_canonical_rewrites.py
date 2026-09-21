@@ -19,6 +19,7 @@ CANONICAL_HOSTS = {
     "aurora-api.e-dani.com",
     "aurora.e-dani.com",
     "bambulab.e-dani.com",
+    "borradores.e-dani.com",
     "brain-ingest-k8s.e-dani.com",
     "brain-k8s.e-dani.com",
     "chamber.e-dani.com",

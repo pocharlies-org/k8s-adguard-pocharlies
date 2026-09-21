@@ -139,6 +139,9 @@ data:
         - domain: "aurora.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
+        - domain: "borradores.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
         - domain: "brain-ingest-k8s.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -385,7 +388,8 @@ spec:
                 adguard-setup.e-dani.com adguard.e-dani.com admin.skirmshop.es \
                 agentgateway-mcp-stg.e-dani.com agentgateway-mcp.e-dani.com \
                 alertmanager.e-dani.com argocd.e-dani.com aurora-api.e-dani.com \
-                aurora.e-dani.com bambulab.e-dani.com brain-ingest-k8s.e-dani.com \
+                aurora.e-dani.com bambulab.e-dani.com borradores.e-dani.com \
+                brain-ingest-k8s.e-dani.com \
                 brain-k8s.e-dani.com chamber.e-dani.com claude.e-dani.com \
                 code.e-dani.com dgx-synapse-mcp.e-dani.com dgx.e-dani.com \
                 firecrawl.e-dani.com grafana.e-dani.com ha-dashboard.e-dani.com \
