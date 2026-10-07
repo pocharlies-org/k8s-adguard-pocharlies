@@ -1,0 +1,12 @@
+# INFRA-630: priority for the LAN network plane (adguard here, metallb speaker in
+# k8s-gitops-pocharlies infra/metallb/values.yaml). Incident INFRA-625: under
+# DiskPressure on ubuntu the kubelet evicted both and the LAN lost DNS for 5h18m.
+# system-cluster-critical is scheduler-restricted to kube-system, so this is a
+# dedicated class: below the system-* classes, above everything evictable.
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: network-critical
+value: 1000000000
+globalDefault: false
+description: "LAN network plane: DNS (adguard) and MetalLB speaker. Never evict."
