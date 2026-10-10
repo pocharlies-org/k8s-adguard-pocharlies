@@ -22,7 +22,6 @@ CANONICAL_HOSTS = {
     "borradores.e-dani.com",
     "brain-ingest-k8s.e-dani.com",
     "brain-k8s.e-dani.com",
-    "chamber.e-dani.com",
     "claude.e-dani.com",
     "code.e-dani.com",
     "dgx-synapse-mcp.e-dani.com",
@@ -47,6 +46,7 @@ CANONICAL_HOSTS = {
     "openclaw-k8s.e-dani.com",
     "openclaw-synapse.e-dani.com",
     "openclaw.e-dani.com",
+    "paseo.e-dani.com",
     "picqer-mcp.e-dani.com",
     "s3.e-dani.com",
     "sauvage-bot.e-dani.com",
@@ -61,6 +61,15 @@ CANONICAL_HOSTS = {
     "vm.e-dani.com",
     "whatsapp-pro.e-dani.com",
     "whatsapp.e-dani.com",
+}
+
+# Retired hosts: purged from the persisted config by the init container and never seeded.
+RETIRED_HOSTS = {
+    "chamber.e-dani.com",
+    "multichamber.e-dani.com",
+    "openclaw-sauvage.e-dani.com",
+    "openclaw-webhooks.e-dani.com",
+    "paperclip.e-dani.com",
 }
 
 
@@ -85,6 +94,7 @@ def test_seed_contains_every_canonical_host_once_at_the_lan_vip():
         assert by_domain[host] == [
             {"domain": host, "answer": "192.168.50.240", "enabled": True}
         ]
+    assert not RETIRED_HOSTS & by_domain.keys()
 
 
 def test_init_container_reconciles_the_same_canonical_host_set():
@@ -105,11 +115,6 @@ def test_init_container_reconciles_the_same_canonical_host_set():
 
 def test_init_container_removes_retired_rewrites_from_persistent_config():
     text = MANIFEST.read_text()
-    for domain in {
-        "multichamber.e-dani.com",
-        "openclaw-sauvage.e-dani.com",
-        "openclaw-webhooks.e-dani.com",
-        "paperclip.e-dani.com",
-    }:
+    for domain in RETIRED_HOSTS:
         assert f'remove_panel_rewrite "{domain}"' in text
     assert "test \"$(grep -Ec" in text

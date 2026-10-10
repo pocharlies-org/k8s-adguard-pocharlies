@@ -83,7 +83,7 @@ data:
         - domain: "claude.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
-        - domain: "chamber.e-dani.com"
+        - domain: "paseo.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
         - domain: "jarvis.e-dani.com"
@@ -380,6 +380,7 @@ spec:
               # Retired hosts must also be removed from the persisted runtime
               # config: removing them from the seed/list alone is insufficient.
               remove_panel_rewrite "openclaw-sauvage.e-dani.com"
+              remove_panel_rewrite "chamber.e-dani.com"
               remove_panel_rewrite "multichamber.e-dani.com"
               remove_panel_rewrite "openclaw-webhooks.e-dani.com"
               remove_panel_rewrite "paperclip.e-dani.com"
@@ -390,7 +391,7 @@ spec:
                 alertmanager.e-dani.com argocd.e-dani.com aurora-api.e-dani.com \
                 aurora.e-dani.com bambulab.e-dani.com borradores.e-dani.com \
                 brain-ingest-k8s.e-dani.com \
-                brain-k8s.e-dani.com chamber.e-dani.com claude.e-dani.com \
+                brain-k8s.e-dani.com claude.e-dani.com \
                 code.e-dani.com dgx-synapse-mcp.e-dani.com dgx.e-dani.com \
                 firecrawl.e-dani.com grafana.e-dani.com ha-dashboard.e-dani.com \
                 harbor.e-dani.com home-assistant.e-dani.com jarvis.e-dani.com \
@@ -400,7 +401,7 @@ spec:
                 openclaw-k8s-readonly.e-dani.com \
                 openclaw-k8s-webhooks.e-dani.com openclaw-k8s.e-dani.com \
                 openclaw-synapse.e-dani.com openclaw.e-dani.com \
-                picqer-mcp.e-dani.com s3.e-dani.com \
+                paseo.e-dani.com picqer-mcp.e-dani.com s3.e-dani.com \
                 sauvage-bot.e-dani.com skirmbooks.e-dani.com \
                 skirmshop-s3-console.e-dani.com skirmshop-s3.e-dani.com \
                 stt-mcp.e-dani.com synapse.e-dani.com teslamate.e-dani.com \
