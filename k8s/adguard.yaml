@@ -284,6 +284,13 @@ spec:
       # so DNS stays independent of the OVH cluster / WAN.
       nodeSelector:
         kubernetes.io/hostname: ubuntu
+      # 2026-10-07 INFRA-630: incident INFRA-625 — a DiskPressure taint on ubuntu
+      # left the LAN without DNS for 5h18m because this pod could not stay put and
+      # the kubelet evicted it anyway. The toleration survives the taint; the
+      # priority (network-critical, defined in priorityclass.yaml) survives eviction.
+      priorityClassName: network-critical
+      tolerations:
+        - { key: node.kubernetes.io/disk-pressure, operator: Exists, effect: NoSchedule }
       initContainers:
         # Seed config on first run and apply idempotent split-DNS migrations to
         # existing state. All other operator-managed AdGuard settings remain untouched.
