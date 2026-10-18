@@ -30,6 +30,7 @@ CANONICAL_HOSTS = {
     "grafana.e-dani.com",
     "ha-dashboard.e-dani.com",
     "harbor.e-dani.com",
+    "hindsight.e-dani.com",
     "home-assistant.e-dani.com",
     "jarvis.e-dani.com",
     "keep-api.e-dani.com",
