@@ -163,6 +163,9 @@ data:
         - domain: "harbor.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
+        - domain: "hindsight.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
         - domain: "home-assistant.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -394,7 +397,8 @@ spec:
                 brain-k8s.e-dani.com claude.e-dani.com \
                 code.e-dani.com dgx-synapse-mcp.e-dani.com dgx.e-dani.com \
                 firecrawl.e-dani.com grafana.e-dani.com ha-dashboard.e-dani.com \
-                harbor.e-dani.com home-assistant.e-dani.com jarvis.e-dani.com \
+                harbor.e-dani.com hindsight.e-dani.com home-assistant.e-dani.com \
+                jarvis.e-dani.com \
                 keep-api.e-dani.com keep.e-dani.com langfuse.e-dani.com \
                 libreplay.e-dani.com litellm.e-dani.com longhorn.e-dani.com \
                 mcp-socialmedia.e-dani.com minio-s3.e-dani.com minio.e-dani.com \
