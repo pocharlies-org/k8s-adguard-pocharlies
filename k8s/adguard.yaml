@@ -77,12 +77,6 @@ data:
         - domain: "dgx.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
-        - domain: "code.e-dani.com"
-          answer: "192.168.50.240"
-          enabled: true
-        - domain: "claude.e-dani.com"
-          answer: "192.168.50.240"
-          enabled: true
         - domain: "paseo.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -387,6 +381,8 @@ spec:
               remove_panel_rewrite "multichamber.e-dani.com"
               remove_panel_rewrite "openclaw-webhooks.e-dani.com"
               remove_panel_rewrite "paperclip.e-dani.com"
+              remove_panel_rewrite "code.e-dani.com"     # DGX-1135: opencode retirado
+              remove_panel_rewrite "claude.e-dani.com"   # DGX-1135: panel opencode-claude retirado
 
               for domain in \
                 adguard-setup.e-dani.com adguard.e-dani.com admin.skirmshop.es \
@@ -394,8 +390,8 @@ spec:
                 alertmanager.e-dani.com argocd.e-dani.com aurora-api.e-dani.com \
                 aurora.e-dani.com bambulab.e-dani.com borradores.e-dani.com \
                 brain-ingest-k8s.e-dani.com \
-                brain-k8s.e-dani.com claude.e-dani.com \
-                code.e-dani.com dgx-synapse-mcp.e-dani.com dgx.e-dani.com \
+                brain-k8s.e-dani.com \
+                dgx-synapse-mcp.e-dani.com dgx.e-dani.com \
                 firecrawl.e-dani.com grafana.e-dani.com ha-dashboard.e-dani.com \
                 harbor.e-dani.com hindsight.e-dani.com home-assistant.e-dani.com \
                 jarvis.e-dani.com \
