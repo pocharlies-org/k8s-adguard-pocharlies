@@ -281,6 +281,11 @@ spec:
       # so DNS stays independent of the OVH cluster / WAN.
       nodeSelector:
         kubernetes.io/hostname: ubuntu
+      # SC-2807: ubuntu se satura de madrugada con las tareas de backup (load1 medido
+      # 495-783). AdGuard es la DNS de la casa para todo el cluster; sin reserva de CPU
+      # y sin prioridad, bajo esa carga deja de contestar y los cronjobs caen con
+      # EAI_AGAIN (la "ventana nocturna DNS" de SC-2807/SC-2592/SC-2528).
+      priorityClassName: system-node-critical
       initContainers:
         # Seed config on first run and apply idempotent split-DNS migrations to
         # existing state. All other operator-managed AdGuard settings remain untouched.
@@ -424,7 +429,7 @@ spec:
             - { name: config, mountPath: /opt/adguardhome/conf }
             - { name: data,   mountPath: /opt/adguardhome/work }
           resources:
-            requests: { cpu: 50m, memory: 128Mi }
+            requests: { cpu: 200m, memory: 128Mi }
             limits:   { memory: 512Mi }
       volumes:
         # node-local hostPath on ubuntu (/var/lib/adguard), migrated 1:1 from nvidia-dgx
