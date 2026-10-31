@@ -235,6 +235,9 @@ data:
         - domain: "whatsapp.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
+        - domain: "zammad.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
       rewrites_enabled: true
       filtering_enabled: true
       protection_enabled: true
@@ -411,7 +414,8 @@ spec:
                 skirmshop-s3-console.e-dani.com skirmshop-s3.e-dani.com \
                 stt-mcp.e-dani.com synapse.e-dani.com teslamate.e-dani.com \
                 uriel.e-dani.com vault.e-dani.com vm.e-dani.com \
-                whatsapp-pro.e-dani.com whatsapp.e-dani.com; do
+                whatsapp-pro.e-dani.com whatsapp.e-dani.com \
+                zammad.e-dani.com; do
                 ensure_panel_rewrite "$domain"
               done
           volumeMounts:
