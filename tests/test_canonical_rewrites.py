@@ -60,6 +60,7 @@ CANONICAL_HOSTS = {
     "vm.e-dani.com",
     "whatsapp-pro.e-dani.com",
     "whatsapp.e-dani.com",
+    "zammad.e-dani.com",
 }
 
 # Retired hosts: purged from the persisted config by the init container and never seeded.
