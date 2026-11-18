@@ -385,6 +385,8 @@ spec:
               remove_panel_rewrite "paperclip.e-dani.com"
               remove_panel_rewrite "code.e-dani.com"     # DGX-1135: opencode retirado
               remove_panel_rewrite "claude.e-dani.com"   # DGX-1135: panel opencode-claude retirado
+              remove_panel_rewrite "brain-k8s.e-dani.com"      # SC-5827: el Brain muere
+              remove_panel_rewrite "brain-ingest-k8s.e-dani.com"  # SC-5827
 
               for domain in \
                 adguard-setup.e-dani.com adguard.e-dani.com admin.skirmshop.es \
