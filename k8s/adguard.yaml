@@ -136,12 +136,6 @@ data:
         - domain: "borradores.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
-        - domain: "brain-ingest-k8s.e-dani.com"
-          answer: "192.168.50.240"
-          enabled: true
-        - domain: "brain-k8s.e-dani.com"
-          answer: "192.168.50.240"
-          enabled: true
         - domain: "dgx-synapse-mcp.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -391,14 +385,14 @@ spec:
               remove_panel_rewrite "paperclip.e-dani.com"
               remove_panel_rewrite "code.e-dani.com"     # DGX-1135: opencode retirado
               remove_panel_rewrite "claude.e-dani.com"   # DGX-1135: panel opencode-claude retirado
+              remove_panel_rewrite "brain-k8s.e-dani.com"      # SC-5827: el Brain muere
+              remove_panel_rewrite "brain-ingest-k8s.e-dani.com"  # SC-5827
 
               for domain in \
                 adguard-setup.e-dani.com adguard.e-dani.com admin.skirmshop.es \
                 agentgateway-mcp-stg.e-dani.com agentgateway-mcp.e-dani.com \
                 alertmanager.e-dani.com argocd.e-dani.com aurora-api.e-dani.com \
                 aurora.e-dani.com bambulab.e-dani.com borradores.e-dani.com \
-                brain-ingest-k8s.e-dani.com \
-                brain-k8s.e-dani.com \
                 dgx-synapse-mcp.e-dani.com dgx.e-dani.com \
                 firecrawl.e-dani.com grafana.e-dani.com ha-dashboard.e-dani.com \
                 harbor.e-dani.com hindsight.e-dani.com home-assistant.e-dani.com \

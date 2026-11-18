@@ -20,8 +20,6 @@ CANONICAL_HOSTS = {
     "aurora.e-dani.com",
     "bambulab.e-dani.com",
     "borradores.e-dani.com",
-    "brain-ingest-k8s.e-dani.com",
-    "brain-k8s.e-dani.com",
     "dgx-synapse-mcp.e-dani.com",
     "dgx.e-dani.com",
     "firecrawl.e-dani.com",
@@ -65,6 +63,8 @@ CANONICAL_HOSTS = {
 
 # Retired hosts: purged from the persisted config by the init container and never seeded.
 RETIRED_HOSTS = {
+    "brain-ingest-k8s.e-dani.com",
+    "brain-k8s.e-dani.com",
     "chamber.e-dani.com",
     "claude.e-dani.com",
     "code.e-dani.com",
