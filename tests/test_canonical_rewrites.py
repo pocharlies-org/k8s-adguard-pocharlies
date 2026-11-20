@@ -20,6 +20,7 @@ CANONICAL_HOSTS = {
     "aurora.e-dani.com",
     "bambulab.e-dani.com",
     "borradores.e-dani.com",
+    "chat.e-dani.com",
     "dgx-synapse-mcp.e-dani.com",
     "dgx.e-dani.com",
     "firecrawl.e-dani.com",

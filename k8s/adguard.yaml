@@ -136,6 +136,11 @@ data:
         - domain: "borradores.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
+        # OWU-143: Open WebUI (chat.e-dani.com) — el CNAME público apunta a
+        # images.openclaw (IPs públicas); en LAN debe entrar por traefik-lan.
+        - domain: "chat.e-dani.com"
+          answer: "192.168.50.240"
+          enabled: true
         - domain: "dgx-synapse-mcp.e-dani.com"
           answer: "192.168.50.240"
           enabled: true
@@ -393,6 +398,7 @@ spec:
                 agentgateway-mcp-stg.e-dani.com agentgateway-mcp.e-dani.com \
                 alertmanager.e-dani.com argocd.e-dani.com aurora-api.e-dani.com \
                 aurora.e-dani.com bambulab.e-dani.com borradores.e-dani.com \
+                chat.e-dani.com \
                 dgx-synapse-mcp.e-dani.com dgx.e-dani.com \
                 firecrawl.e-dani.com grafana.e-dani.com ha-dashboard.e-dani.com \
                 harbor.e-dani.com hindsight.e-dani.com home-assistant.e-dani.com \
